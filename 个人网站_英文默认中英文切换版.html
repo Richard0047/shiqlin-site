@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="Richard Lin Shi-Qi - Portfolio" data-zh="林仕祺 - 个人作品集">Richard Lin Shi-Qi - Portfolio</title>
+    <style>
+        :root {
+            --primary-font: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --secondary-font: 'Arial', sans-serif;
+            --text-color: #E0E0E0;
+            --bg-color: #121212;
+            --grid-bg-color: #1E1E1E;
+            --highlight-color-1: #00FFFF; /* Cyan */
+            --highlight-color-2: #FF00FF; /* Magenta */
+            --highlight-color-3: #00FF00; /* Green */
+            --border-radius: 15px;
+            --padding: 20px;
+            --grid-gap: 20px;
+        }
+
+        body {
+            font-family: var(--primary-font);
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: var(--padding);
+            line-height: 1.6;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--grid-gap);
+            max-width: 1600px;
+            margin: auto;
+        }
+
+        .bento-item {
+            background-color: var(--grid-bg-color);
+            border-radius: var(--border-radius);
+            padding: var(--padding);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+            overflow: hidden; /* For glow effects */
+            position: relative; /* For pseudo-elements */
+        }
+
+        .bento-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Glow effects */
+        .bento-item.glow-cyan::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.15) 0%, rgba(0, 255, 255, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 0;
+        }
+        .bento-item.glow-magenta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.15) 0%, rgba(255, 0, 255, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 0;
+        }
+        .bento-item.glow-green::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 255, 0, 0.15) 0%, rgba(0, 255, 0, 0) 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 0;
+        }
+        .bento-item:hover::before {
+            opacity: 1;
+        }
+        .bento-item > * {
+            position: relative; /* Ensure content is above glow */
+            z-index: 1;
+        }
+
+
+        /* Typography */
+        .title-cn {
+            font-size: 3.5em; /* Super large font */
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #FFFFFF;
+            text-shadow: 0 0 10px var(--highlight-color-1), 0 0 20px var(--highlight-color-1);
+        }
+        .title-en {
+            font-size: 1.2em;
+            color: var(--highlight-color-1);
+            margin-bottom: 20px;
+            display: block;
+            opacity: 0.8;
+        }
+        .subtitle-cn {
+            font-size: 2em;
+            font-weight: bold;
+            color: #FFFFFF;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .subtitle-en {
+            font-size: 1em;
+            color: var(--highlight-color-2);
+            margin-bottom: 15px;
+            display: block;
+            opacity: 0.8;
+        }
+         .subtitle-en.small {
+            font-size: 0.9em; /* Slightly smaller for taglines */
+            margin-top: -10px; /* Pull closer to previous subtitle */
+        }
+        .content-text {
+            font-size: 0.95em;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+        .content-text strong {
+            color: #FFFFFF;
+            font-weight: bold;
+        }
+        .content-text ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .content-text ul li {
+            margin-bottom: 8px;
+            position: relative;
+            padding-left: 20px;
+        }
+        .content-text ul li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            color: var(--highlight-color-3);
+            font-size: 0.8em;
+        }
+        a {
+            color: var(--highlight-color-1);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #FFFFFF;
+            text-decoration: underline;
+        }
+
+        /* Specific item styling */
+        .profile-header {
+            grid-column: 1 / -1; /* Span full width */
+            text-align: center;
+        }
+        .profile-header .title-cn {
+            font-size: 5em;
+        }
+        .profile-header .title-en {
+            font-size: 1.5em;
+        }
+
+        .profile-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            background-color: rgba(255,255,255,0.05); /* fallback bg */
+        }
+
+        .profile-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Fill container */
+            border-radius: var(--border-radius);
+            display: block;
+        }
+        .profile-image-placeholder {
+            display: flex;
+            flex-direction: column; /* Stack text vertically */
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            height: 100%; /* Fill container */
+            background-color: rgba(255,255,255,0.05);
+            border-radius: var(--border-radius); /* Apply radius to placeholder */
+            color: var(--highlight-color-2);
+            font-size: 1.2em;
+            padding: 20px; /* Add some padding */
+            box-sizing: border-box; /* Include padding in element's total width and height */
+        }
+
+        .icon-placeholder { /* For simple line graphics */
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--highlight-color-3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px auto;
+            font-size: 1.5em;
+            color: var(--highlight-color-3);
+        }
+        .pdf-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: var(--highlight-color-1);
+            color: var(--bg-color);
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .pdf-link:hover {
+            background-color: #FFFFFF;
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+
+        /* Layout adjustments for larger items */
+        .span-2 {
+            grid-column: span 2;
+        }
+        .span-3 {
+            grid-column: span 3;
+        }
+         @media (max-width: 900px) {
+            .span-2, .span-3 {
+                grid-column: span 1;
+            }
+        }
+        @media (max-width: 600px) {
+            .title-cn {
+                font-size: 2.5em;
+            }
+            .profile-header .title-cn {
+                font-size: 3.5em;
+            }
+            .subtitle-cn {
+                font-size: 1.5em;
+            }
+             .subtitle-en {
+                font-size: 0.9em;
+            }
+             .subtitle-en.small {
+                font-size: 0.8em;
+            }
+        }
+
+        /* Basic scroll animation (requires JS for advanced Apple-like effects) */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* PDF embed styling */
+        .pdf-embed-container {
+            width: 100%;
+            height: 500px; /* Adjust as needed */
+            border: none;
+            border-radius: var(--border-radius);
+        }
+        #music-toggle, #language-toggle {
+            position: fixed;
+            top: 20px;
+            z-index: 999;
+            background-color: rgba(0,255,255,0.12);
+            border: 1px solid var(--highlight-color-1);
+            border-radius: 12px;
+            color: var(--highlight-color-1);
+            padding: 10px 14px;
+            font-size: 0.95em;
+            font-family: var(--secondary-font);
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        #language-toggle {
+            right: 160px; /* Position to the left of music-toggle */
+        }
+        #music-toggle {
+            right: 20px;
+        }
+        #music-toggle:hover, #language-toggle:hover {
+            background-color: var(--highlight-color-1);
+            color: var(--bg-color);
+        }
+
+        #bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.45); /* Adjustable opacity */
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .profile-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+    </style>
+</head>
+
+
+<body>
+
+<audio id="bg-music" src="music/call-to-the-soul.mp3" loop preload="auto"></audio>
+<button onclick="toggleLanguage()" id="language-toggle" data-en="📑 Language / 语言" data-zh="📑 语言 / Language">Language / 语言</button>
+<button onclick="toggleMusic()" id="music-toggle" data-en="🎧 Music 音乐" data-zh="🎧 Music 音乐">🎧 Music 音乐</button>
+
+    <div class="container">
+        <div class="bento-item profile-header glow-cyan scroll-reveal" style="position: relative; overflow: hidden; background-color: transparent;">
+            <video autoplay muted loop playsinline id="bg-video">
+                <source src="media/ocean.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        
+            <div class="video-overlay"></div>
+        
+            <div class="profile-content">
+                <p class="content-text" style="font-size: 1.1em; max-width: 800px; margin: 20px auto 10px; text-align: center; font-style: italic; color: var(--highlight-color-1);">
+                    <span data-en="Against the current, I sail the world — docking at every harbor life offers." data-zh="逆流而上，做世界的水手，奔赴所有的码头。">Against the current, I sail the world — docking at every harbor life offers.</span>
+                </p>
+                <h1 class="title-cn" style="font-size: 5em;"><span data-en="Richard Lin Shi-Qi" data-zh="林仕祺">Richard Lin Shi-Qi</span></h1>
+                <span class="title-en" style="font-size: 1.5em;"><span data-en="Richard Lin Shi-Qi" data-zh="Richard Lin Shi-Qi">Richard Lin Shi-Qi</span></span>
+                <p class="content-text" style="font-size: 1.2em; margin-top:10px;">
+                    <span data-en="Quantitative Finance | Internet & Consumer Entrepreneur | Sailing Athlete | Venture Builder" data-zh="量化金融 ｜ 互联网产品 & 新消费创业者 ｜ 帆船运动员 ｜ 创投">Quantitative Finance | Internet & Consumer Entrepreneur | Sailing Athlete | Venture Builder</span>
+                </p>
+            </div>
+        </div>
+        
+
+<div class="bento-item glow-magenta scroll-reveal">
+  <h2 class="subtitle-cn" data-en="About Me" data-zh="关于我">About Me</h2>
+  <span class="subtitle-en" data-en="About Me" data-zh="关于我">About Me</span>
+
+  <p class="content-text">
+    <span data-en="I’m a 24-year-old with a background in Accounting and Economics. At USYD, I completed my degree in 2 years by consistently overloading credits each semester. I've interned across internet startups, law firms, securities firms, and PE/VCs, gaining solid experience in investment analysis and factor research."
+          data-zh="我今年24岁，拥有会计与经济学背景，仅用2年在悉尼大学完成本科学业。曾在互联网创业公司、律所、券商与PE/VC机构实习和工作，积累了投资分析与因子策略研究经验。">
+      I'm a 24-year-old with a background in Accounting and Economics, having completed my degree in just 1.5 years. I've interned across internet startups, law firms, securities firms, and PE/VCs, gaining solid experience in investment analysis and factor research.
+    </span>
+  </p>
+
+  <p class="content-text">
+    <span data-en="I specialize in business analytics and quantitative tools, skilled in Python, R, and front-end development. I prototype research tools and design intuitive UIs using Figma."
+          data-zh="擅长商业分析与量化研究，熟练掌握 Python、R 与前端开发，能独立构建投研原型，并结合 Figma 设计可视化界面。">
+      I specialize in business analytics and quantitative tools, skilled in Python, R, and front-end development. I prototype research tools and design intuitive UIs using Figma.
+    </span>
+  </p>
+
+  <p class="content-text">
+    <span data-en="I also built an open-source AI-powered RSS sentiment engine used by global VCs to enhance market intelligence."
+          data-zh="我开发并开源了一套多语言 AI 新闻分析系统，已被多家国际风投团队使用，助力全球投资情报实时收集。">
+      I also built an open-source AI-powered RSS sentiment engine used by global VCs to enhance market intelligence.
+    </span>
+  </p>
+
+  <p class="content-text">
+    <span data-en="As a competitive sailor, I excel in high-pressure decision-making and cross-functional teamwork."
+          data-zh="作为帆船运动员，我在高压环境中锤炼了快速决策与跨领域协作能力。">
+      As a competitive sailor, I excel in high-pressure decision-making and cross-functional teamwork.
+    </span>
+  </p>
+
+  <p class="content-text">
+    <span data-en="Contact: richardlin0047@gmail.com | +61 0449695376" 
+          data-zh="联系方式：richardlin0047@gmail.com ｜ +86 19875920047">
+      Contact: <a href="mailto:richardlin0047@gmail.com">richardlin0047@gmail.com</a> | +86 19875920047
+    </span><br>
+    <span data-en="WeChat Official Account: Richard-017" 
+          data-zh="微信公众号：林十柒先生">WeChat Official Account: 林十柒先生</span>
+  </p>
+</div>
+
+        <div class="bento-item profile-image-container glow-green scroll-reveal">
+            <img src="images/life-photo-1.jpeg" alt="Richard Lin - Life Photo 1" loading="lazy">
+        </div>
+        
+        <div class="bento-item profile-image-container glow-cyan scroll-reveal">
+            <img src="images/life-photo-2.jpeg" alt="Richard Lin - Life Photo 2" loading="lazy">
+        </div>
+        
+        <div class="bento-item profile-image-container glow-magenta scroll-reveal">
+            <img src="images/life-photo-3.jpeg" alt="Richard Lin - Life Photo 3" loading="lazy">
+        </div>
+        <div class="bento-item span-2 glow-cyan scroll-reveal">
+            <h2 class="subtitle-cn" data-en="Education" data-zh="教育背景">Education</h2>
+            <span class="subtitle-en" data-en="教育背景" data-zh="Education">Education</span>
+            <div class="content-text">
+              <ul>
+                <li>
+                  <strong data-en="University of Sydney" data-zh="悉尼大学 (University of Sydney)">University of Sydney</strong> -
+                  <span data-en="Bachelor of Economics: Financial Economics and Accounting" data-zh="经济学学士: 金融经济与会计">Bachelor of Economics: Financial Economics and Accounting</span><br>
+                  <span data-en="Graduated Dec 2024, GPA: 3.8/4.0" data-zh="毕业 Dec 2024, GPA: 3.8/4.0">Graduated Dec 2024, GPA: 3.8/4.0</span><br>
+                  <span data-en="Completed the majority of core credits within 1.5 years" data-zh="仅用 1.5 年完成大部分核心学分"><em>Completed the majority of core credits within 1.5 years</em></span><br>
+                  <span data-en="Achieved Distinction or above in all intermediate-level Economics courses, including High Distinction in ECMT3130: Forecasting for Economics and Business." data-zh="所有中级经济学课程均取得 Distinction 以上成绩，包括 ECMT3130: Forecasting for Economics and Business（金 融时间序列课程）获得 High Distinction。">
+                    Achieved Distinction or above in all intermediate-level Economics courses, including High Distinction in ECMT3130: Forecasting for Economics and Business.
+                  </span>
+                </li>
+                <li>
+                  <strong data-en="University of Cambridge" data-zh="剑桥大学 (University of Cambridge)">University of Cambridge</strong> -
+                  <span data-en="Study Abroad Program Summer School - Jul 2024" data-zh="暑期访学项目 - 2024年7月">Study Abroad Program Summer School - Jul 2024</span>
+                </li>
+                <li>
+                  <strong data-en="University of London LSE EMFSS Programmes" data-zh="伦敦大学 LSE EMFSS 项目">University of London LSE EMFSS Programmes</strong> -
+                  <span data-en="BSc: Accounting and Finance (Transferred)" data-zh="BSc: 会计与金融（已转学）">BSc: Accounting and Finance (Transferred)</span><br>
+                  <span data-en="Sep 2019 – Jun 2021, GPA: 3.2/4.0" data-zh="2019年9月 – 2021年6月, GPA: 3.2/4.0">Sep 2019 – Jun 2021, GPA: 3.2/4.0</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        <div class="bento-item span-2 glow-magenta scroll-reveal">
+            <h2 class="subtitle-cn" data-en="Core Skills" data-zh="核心技能">Core Skills</h2>
+            <span class="subtitle-en" data-en="核心技能" data-zh="Core Skills">Core Skills</span>
+            <div class="content-text">
+                <p><strong data-en="Investment Research & Quantitative Analysis:" data-zh="投资研究 & 量化分析 (Investment Research & Quantitative Analysis):">Investment Research & Quantitative Analysis:</strong> <span data-en="Financial Modeling, Industry Research, Factor Analysis, Portfolio Optimization, Trading Strategy Development." data-zh="财务建模 (Financial Modeling), 行业研究 (Industry Research), 因子分析 (Factor Analysis), 投资组合优化 (Portfolio Optimization), 交易策略开发 (Trading Strategy Development).">Financial Modeling, Industry Research, Factor Analysis, Portfolio Optimization, Trading Strategy Development.</span></p>
+                <p><strong data-en="Data Analysis & Quantitative Modeling:" data-zh="数据分析 & 量化建模 (Data Analysis & Quantitative Modeling):">Data Analysis & Quantitative Modeling:</strong> <span data-en="Python, R, Stata, Pine Script, SQL, Time Series Analysis, Automated Trading." data-zh="Python, R, Stata, Pine Script, SQL, 时间序列分析 (Time Series Analysis), 自动化交易 (Automated Trading).">Python, R, Stata, Pine Script, SQL, Time Series Analysis, Automated Trading.</span></p>
+                <p><strong data-en="Fintech & Product Experience:" data-zh="金融科技 & 产品经验 (Fintech & Product Experience):">Fintech & Product Experience:</strong> <span data-en="Decentralized Insurance (Founder - insurancedao.world), Blockchain Supply Chain Finance, SaaS Transaction System Architecture, AI-driven RSS News Analysis (GitHub Project:https://github.com/Richard0047/-ai-rss-analyzer)." data-zh="去中心化保险 (创始人 Founder - insurancedao.world), 区块链供应链金融 (Blockchain Supply Chain Finance), SaaS交易系统架构 (SaaS Transaction System Architecture), AI驱动RSS新闻分析 (AI-driven RSS News Analysis - GitHub Project: https://github.com/Richard0047/-ai-rss-analyzer).">Decentralized Insurance (<span data-en="Founder" data-zh="创始人">Founder</span> - <a href="http://www.insurancedao.world" target="_blank">insurancedao.world</a>), <span data-en="Blockchain Supply Chain Finance" data-zh="区块链供应链金融">Blockchain Supply Chain Finance</span>, <span data-en="SaaS Transaction System Architecture" data-zh="SaaS交易系统架构">SaaS Transaction System Architecture</span>, <span data-en="AI-driven RSS News Analysis" data-zh="AI驱动RSS新闻分析">AI-driven RSS News Analysis</span> - <a href="https://github.com/Richard0047/-ai-rss-analyzer" target="_blank">GitHub Project</a>).</span></p>
+            </div>
+             <a href="Richard Lin.pdf" target="_blank" class="pdf-link" data-en="View Full Resume PDF" data-zh="查看完整简历 (View Full Resume PDF)">View Full Resume PDF</a>
+        </div>
+
+        <div class="bento-item span-3 profile-header glow-green scroll-reveal">
+            <h1 class="title-cn" style="font-size: 3.5em; margin-top: 20px;"><span data-en="Entrepreneurial Ventures" data-zh="创业项目">Entrepreneurial Ventures</span></h1>
+            <span class="title-en" style="font-size: 1.3em;"><span data-en="Entrepreneurial Ventures" data-zh="Entrepreneurial Ventures">Entrepreneurial Ventures</span></span>
+        </div>
+        
+
+        <div class="bento-item span-2 glow-cyan scroll-reveal">
+            <div class="icon-placeholder">AI</div>
+            <h2 class="subtitle-cn" data-en="AI E-commerce Project" data-zh="AI电商项目">AI E-commerce Project</h2>
+            <span class="subtitle-en" data-en="AI E-commerce Project" data-zh="AI E-commerce Project">AI E-commerce Project</span>
+            <p class="content-text">
+                <strong data-en="Vision:" data-zh="愿景 (Vision):">Vision:</strong> <span data-en="Redefining fashion e-commerce with AI, including AI music, digital supermodel shows, and intelligent mirror digital humans." data-zh="通过人工智能技术重新定义时尚电商，利用AI音乐、数字超模时装秀、智能镜像数字人等提供革新购物体验。">Redefining fashion e-commerce with AI, including AI music, digital supermodel shows, and intelligent mirror digital humans.</span>
+            </p>
+            <p class="content-text">
+                <strong data-en="Core:" data-zh="核心 (Core):">Core:</strong> <span data-en="Creating an AI-powered 'Outlet' platform for off-season fashion, supporting independent and sustainable designers." data-zh="打造结合AI的‘奥特莱斯“电商平台，销售过季大牌时装。为独立设计师和可持续品牌提供最佳平台。">Creating an AI-powered "Outlet" platform for off-season fashion, supporting independent and sustainable designers.</span>
+            </p>
+             <p class="content-text">
+                <strong data-en="Future:" data-zh="未来 (Future):">Future:</strong> <span data-en="Developing mirror digital human technology for digital identity in AR/VR." data-zh="开发镜像数字人技术，作为AR/VR世界的数字身份通行证。">Developing mirror digital human technology for digital identity in AR/VR.</span>
+            </p>
+            <a href="AI电商-min.pdf" target="_blank" class="pdf-link" data-en="Learn More - PDF" data-zh="了解AI电商项目 (Learn More - PDF)">Learn More - PDF</a>
+        </div>
+
+        <div class="bento-item glow-green scroll-reveal">
+            <h3 class="subtitle-cn" style="font-size:1.5em; text-align:center;" data-en="AI E-commerce - UI Sneak Peek" data-zh="AI电商 - 产品界面预览">AI E-commerce - UI Sneak Peek</h3>
+            <span class="subtitle-en" style="text-align:center; display:block; margin-bottom:10px;" data-en="AI E-commerce - UI Sneak Peek" data-zh="AI E-commerce - UI Sneak Peek">AI E-commerce - UI Sneak Peek</span>
+            <div style="width:100%; height: 300px; background-image: url('AI电商-min.pdf#page=11'); background-size:contain; background-repeat:no-repeat; background-position:center; border: 1px solid var(--highlight-color-3); border-radius: 10px;" title="AI电商APP界面预览 - 来自PDF第11页">
+                <p style="text-align:center; color: var(--text-color); padding-top:10px;"></p>
+            </div>
+             <p class="content-text" style="font-size:0.8em; text-align:center; margin-top:5px;" data-en="Note: Conceptual representation. Displaying specific PDF pages as images requires further processing." data-zh="Note: Conceptual representation. Displaying specific PDF pages as images requires further processing.">Note: This is a conceptual representation. Displaying a specific PDF page as an image typically requires server-side processing or a JS PDF library.</p>
+        </div>
+
+
+        <div class="bento-item span-2 glow-magenta scroll-reveal">
+             <div class="icon-placeholder">Bio</div>
+            <h2 class="subtitle-cn" data-en="USOF - Functional Consumer Goods" data-zh="USOF - 功能性消费品">USOF - Functional Consumer Goods</h2>
+            <span class="subtitle-en" data-en="USOF - Functional Consumer Goods" data-zh="USOF - Functional Consumer Goods">USOF - Functional Consumer Goods</span>
+            <p class="content-text">
+                <strong data-en="Company:" data-zh="公司简介 (Company):">Company:</strong> <span data-en="A synthetic biology-based consumer goods company focusing on products like fish collagen peptides." data-zh="基于合成生物科技的消费品公司，专注开发鱼胶原蛋白肽等功能性产品。">A synthetic biology-based consumer goods company focusing on products like fish collagen peptides.</span>
+            </p>
+            <p class="content-text">
+                <strong data-en="Core Product:" data-zh="核心产品 (Core Product):">Core Product:</strong> <span data-en="Fish collagen small molecule peptide capsules, 'Soul Healing' oral functional products." data-zh="鱼胶原蛋白小分子多肽胶囊，‘Soul灵魂治愈’口服功能性产品。">Fish collagen small molecule peptide capsules, 'Soul Healing' oral functional products.</span>
+            </p>
+            <p class="content-text">
+                <strong data-en="Business Model:" data-zh="商业模式 (Business Model):">Business Model:</strong> <span data-en="E-commerce, offline retail concept stores, co-branding with trendy tea drinks." data-zh="电商，线下零售集合店，潮流茶饮IP联名。">E-commerce, offline retail concept stores, co-branding with trendy tea drinks.</span>
+            </p>
+             <p class="content-text" data-en="Received seed funding, terminated due to the pandemic." data-zh="获得种子轮融资，因疫情终止">Received seed funding, terminated due to the pandemic</p>
+            <a href="USOF商业计划书.pdf" target="_blank" class="pdf-link" data-en="Discover USOF - PDF" data-zh="探索USOF项目 (Discover USOF - PDF)">Discover USOF - PDF</a>
+        </div>
+
+         <div class="bento-item glow-green scroll-reveal">
+            <h3 class="subtitle-cn" style="font-size:1.5em; text-align:center;" data-en="USOF - Product Glimpse" data-zh="USOF - 产品预览">USOF - Product Glimpse</h3>
+            <span class="subtitle-en" style="text-align:center; display:block; margin-bottom:10px;" data-en="USOF - Product Glimpse" data-zh="USOF - Product Glimpse">USOF - Product Glimpse</span>
+            <div style="width:100%; height: 300px; background-image: url('USOF商业计划书.pdf#page=3'); background-size:contain; background-repeat:no-repeat; background-position:center; border: 1px solid var(--highlight-color-2); border-radius: 10px;" title="USOF产品预览 - 来自PDF第3页">
+                 <p style="text-align:center; color: var(--text-color); padding-top:10px;"></p>
+            </div>
+            <p class="content-text" style="font-size:0.8em; text-align:center; margin-top:5px;" data-en="Note: Conceptual representation. Displaying specific PDF pages as images requires further processing." data-zh="Note: Conceptual representation. Displaying specific PDF pages as images requires further processing.">Note: Conceptual representation. Displaying specific PDF pages as images requires further processing.</p>
+        </div>
+
+        <div class="bento-item span-3 profile-header glow-cyan scroll-reveal">
+            <h1 class="title-cn" style="font-size: 3.5em; margin-top: 20px;"><span data-en="Sailing & Leadership" data-zh="帆船运动 & 领导力">Sailing & Leadership</span></h1>
+            <span class="title-en" style="font-size: 1.3em;"><span data-en="Sailing & Leadership" data-zh="Sailing & Leadership">Sailing & Leadership</span></span>
+        </div>
+
+        <div class="bento-item span-3 glow-cyan scroll-reveal">
+            <div class="icon-placeholder">⛵</div>
+            <h2 class="subtitle-cn" data-en="The Golden-Series Sailing Club" data-zh="金仕环球帆船中心">The Golden-Series Sailing Club</h2>
+            <span class="subtitle-en" data-en="The Golden-Series Sailing Club (Co-founder)" data-zh="The Golden-Series Sailing Club (Co-founder)">The Golden-Series Sailing Club (Co-founder)</span>
+            <p class="content-text">
+                <strong data-en="Mission:" data-zh="使命 (Mission):">Mission:</strong> <span data-en="A leading global sailing education provider for 8-16 year olds, offering professional training, overseas study tours, and leadership development." data-zh="全球领先的帆船教育资源供应商，为8-16岁青少年提供专业帆船学习、海外游学及领导力培养。">A leading global sailing education provider for 8-16 year olds, offering professional training, overseas study tours, and leadership development.</span>
+            </p>
+            <p class="content-text">
+                <strong data-en="Core Business:" data-zh="核心业务 (Core Business):">Core Business:</strong> <span data-en="RYA/ASA certified courses, international English education, overseas sailing tours (Sydney, Malta), participation in international regattas, elite leadership programs." data-zh="RYA/ASA认证课程, 国际英语教育, 海外帆船游学 (悉尼、马耳他), 参与国际赛事, 精英领导力传承计划。">RYA/ASA certified courses, international English education, overseas sailing tours (Sydney, Malta), participation in international regattas, elite leadership programs.</span>
+            </p>
+             <p class="content-text">
+                <span data-en="As a co-founder, dedicated to combining sailing with comprehensive youth development." data-zh="作为联合创始人，致力于将帆船运动与青少年全面发展相结合。">As a co-founder, dedicated to combining sailing with comprehensive youth development.</span>
+            </p>
+            <a href="金仕环球帆船中心品牌宣传书.pdf" target="_blank" class="pdf-link" data-en="Learn More - PDF" data-zh="了解帆船中心 (Learn More - PDF)">Learn More - PDF</a>
+        </div>
+
+        <div class="bento-item span-3 glow-green scroll-reveal">
+             <div class="icon-placeholder">🛡️</div> <h2 class="subtitle-cn" data-en="InsuranceDAO.World - Decentralized Insurance" data-zh="InsuranceDAO.World - 去中心化保险">InsuranceDAO.World - Decentralized Insurance</h2>
+            <span class="subtitle-en" data-en="Peer-to-Peer Smart Insurance Mechanism" data-zh="Peer-to-Peer Smart Insurance Mechanism">Peer-to-Peer Smart Insurance Mechanism</span>
+            <span class="subtitle-en small" data-en="Powered By Advanced Algorithm and AI." data-zh="Powered By Advanced Algorithm and AI.">Powered By Advanced Algorithm and AI.</span> <p class="content-text" style="margin-top: 15px;">
+                <strong data-en="Revolutionizing optimization through innovative algorithms and transparent AI pricing mechanisms." data-zh="通过创新算法和透明AI定价机制，彻底革新优化方式。">Revolutionizing optimization through innovative algorithms and transparent AI pricing mechanisms.</strong>
+            </p>
+            <p class="content-text" data-en="InsuranceDAO.World combines the precision of the Lagrange Optimization Algorithm with advanced AI agents, setting a new standard for decentralized insurance. Our AI-driven system gathers market intelligence from on-chain and off-chain sources, analyzes community consensus, and automatically adjusts pricing strategies in real-time. This ensures that every premium reflects current market conditions and risk factors. By considering variables such as collateral amount, interest rates, term, contract address, and market volatility, our platform dynamically calibrates premiums—achieving a perfect balance between investor affordability and fair returns for insurance providers." data-zh="InsuranceDAO.World 将 拉格朗日优化算法 (Lagrange Optimization Algorithm) 的精确性与先进的 AI智能体 (AI agents) 相结合，为去中心化保险树立新标准。我们的AI驱动系统从链上和链下源收集市场情报，分析社区共识，并实时自动调整定价策略。这确保了每个保费都反映当前市场条件和风险因素。通过考虑质押金额、利率、期限、合约地址和市场波动性等变量，我们的平台动态校准保费——在投资者可负担性和保险提供商的公平回报之间取得完美平衡。">InsuranceDAO.World 将 <strong data-en="Lagrange Optimization Algorithm" data-zh="拉格朗日优化算法 (Lagrange Optimization Algorithm)">拉格朗日优化算法 (Lagrange Optimization Algorithm)</strong> 的精确性与先进的 <strong data-en="AI agents" data-zh="AI智能体 (AI agents)">AI智能体 (AI agents)</strong> 相结合，为去中心化保险树立新标准。我们的AI驱动系统从链上和链下源收集市场情报，分析社区共识，并实时自动调整定价策略。这确保了每个保费都反映当前市场条件和风险因素。通过考虑质押金额、利率、期限、合约地址和市场波动性等变量，我们的平台动态校准保费——在投资者可负担性和保险提供商的公平回报之间取得完美平衡。</p>
+            <p class="content-text" data-en="This project was independently developed by me within three months—from system architecture and smart contracts to frontend design and AI integration—using the Next.js framework and deployed on the Solana blockchain." data-zh="本项目从产品架构、智能合约开发、前端设计到AI算法接入均由本人在三个月内独立完成，基于 Next.js 框架 构建，并结合 Solana 区块链部署。">本项目从<strong data-en="product architecture, smart contract development, frontend design, to AI algorithm integration" data-zh="产品架构、智能合约开发、前端设计到AI算法接入">产品架构、智能合约开发、前端设计到AI算法接入</strong>均由本人在三个月内独立完成，基于 <strong data-en="Next.js framework" data-zh="Next.js 框架">Next.js 框架</strong> 构建，并结合 Solana 区块链部署。</p>
+            <div class="profile-image-container" style="margin-top: 20px; min-height: 200px;">
+                <img src="images/insurance-homepage.png" alt="InsuranceDAO.World Project Homepage Screenshot" loading="lazy">
+            </div>
+            <a href="http://www.insurancedao.world" target="_blank" class="pdf-link" style="margin-top: 20px;" data-en="Visit InsuranceDAO.World Website" data-zh="访问 InsuranceDAO.World 网站">
+                Visit InsuranceDAO.World Website
+            </a>
+            </div>
+        <div class="bento-item span-3 glow-magenta scroll-reveal">
+            <h2 class="subtitle-cn" data-en="Project Documents (Full PDFs)" data-zh="项目PDF资料">Project Documents (Full PDFs)</h2>
+            <span class="subtitle-en" data-en="Project Documents (Full PDFs)" data-zh="Project Documents (Full PDFs)">Project Documents (Full PDFs)</span>
+            <p class="content-text" data-en="You can view the full PDF presentations for each project by clicking the links below:" data-zh="您可以点击下方链接查看各项目的完整PDF演示文稿：">You can view the full PDF presentations for each project by clicking the links below:</p>
+         
+
+            <h3 class="subtitle-cn" style="font-size:1.3em; margin-top:15px;" data-en="AI E-commerce" data-zh="AI电商 (AI E-commerce)">AI E-commerce</h3>
+            <embed src="AI电商-min.pdf" type="application/pdf" class="pdf-embed-container"/>
+
+            <h3 class="subtitle-cn" style="font-size:1.3em; margin-top:15px;" data-en="USOF Business Plan" data-zh="USOF商业计划书 (USOF Business Plan)">USOF Business Plan</h3>
+            <embed src="USOF商业计划书.pdf" type="application/pdf" class="pdf-embed-container"/>
+
+             <h3 class="subtitle-cn" style="font-size:1.3em; margin-top:15px;" data-en="Golden-Series Sailing Club" data-zh="金仕环球帆船中心 (Golden-Series Sailing Club)">Golden-Series Sailing Club</h3>
+            <embed src="金仕环球帆船中心品牌宣传书.pdf" type="application/pdf" class="pdf-embed-container"/>
+
+             <h3 class="subtitle-cn" style="font-size:1.3em; margin-top:15px;" data-en="Resume" data-zh="个人简历 (Resume)">Resume</h3>
+            <embed src="中文量化岗.pdf" type="application/pdf" class="pdf-embed-container"/>
+        </div>
+
+        <div class="bento-item span-3 glow-cyan scroll-reveal" style="padding: 40px 30px; line-height: 1.9;">
+            <h2 class="subtitle-cn" style="text-align: center; font-size: 2.4em;" data-en="To You Who Read Till Here" data-zh="致读到这里的你">To You Who Read Till Here</h2>
+            <span class="subtitle-en" style="
+            display: block;
+            text-align: center;
+            font-size: 1.1em;
+            font-family: Georgia, 'Times New Roman', serif;
+            color: #CCCCCC;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+        " data-en="To You Who Read Till Here" data-zh="To You Who Read Till Here">
+          To You Who Read Till Here
+        </span>
+            <p class="content-text" style="margin-top: 30px;">
+              <span data-en="At 17, I turned down the chance to become a pilot to pursue a broader commercial world." data-zh="17岁那年，我放弃了成为飞行员的机会，转身投向更广阔的商业世界。">At 17, I turned down the chance to become a pilot to pursue a broader commercial world.</span>
+            </p>
+          
+            <p class="content-text">
+              <span data-en="At 19, I sensed a wave in functional consumer goods, dropped out to found a startup, and became one of the earliest explorers combining anti-aging ingredients with fashion beverages in China." data-zh="19岁，我感受到功能性消费品风口，选择休学创业，成为中国最早将抗衰老成分与潮流饮品结合的探索者之一。">At 19, I sensed a wave in functional consumer goods, dropped out to found a startup, and became one of the earliest explorers combining anti-aging ingredients with fashion beverages in China.</span>
+            </p>
+          
+            <p class="content-text">
+                <span data-en="At 23, from my dorm at Cambridge, I built an MVP with a friend from Tencent for an AI-powered digital outlet combining virtual supermodels with off-season fashion." data-zh="23岁，在剑桥大学宿舍里，我与一个腾讯的朋友独立开发了一个 MVP —— 一个结合 AI 数字超模与过季时尚的线上奥特莱斯平台。">At 23, from my dorm at Cambridge, I built an MVP with a friend from Tencent for an AI-powered digital outlet combining virtual supermodels with off-season fashion.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="I’ve interned at securities firms, private equity, and venture capital institutions, building experience in investment analysis, financial modeling, and quantitative research." data-zh="我先后在证券、私募股权、风险投资等机构实习，积累了投资分析、财务建模与量化研究经验。">I’ve interned at securities firms, private equity, and venture capital institutions, building experience in investment analysis, financial modeling, and quantitative research.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="My strength lies in understanding financial logic from a product perspective and solving business problems with technical solutions." data-zh="我的优势在于：能用产品视角理解金融逻辑，用技术手段解决商业问题。">My strength lies in understanding financial logic from a product perspective and solving business problems with technical solutions.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="During the pandemic, I also joined a legal-tech startup where I led the SaaS product architecture design." data-zh="疫情期间，我也参与了一个法律科技创业项目，主导 SaaS 产品架构设计。">During the pandemic, I also joined a legal-tech startup where I led the SaaS product architecture design.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="As a sailor, I’ve learned to read the wind and stay calm amid turbulence — a survival logic I apply in an ever-changing world." data-zh="而作为一名帆船运动员，我学会了在风浪中读风识向、保持冷静。这种能力，也成了我在变化时代中的生存逻辑。">As a sailor, I’ve learned to read the wind and stay calm amid turbulence — a survival logic I apply in an ever-changing world.</span>
+              </p>
+              
+              <p class="content-text" style="margin-top: 30px;">
+                <span data-en="I believe finance, technology, and reality will converge to form a new order." data-zh="我相信，金融、技术与现实的融合，将创造新的秩序。">I believe finance, technology, and reality will converge to form a new order.</span>
+              </p>
+          
+            <p class="content-text">
+              <span data-en="And I aspire to be the connector, the designer, and the builder of that vision." data-zh="而我愿意成为那个连接者、设计者、实践者。">And I aspire to be the connector, the designer, and the builder of that vision.</span>
+            </p>
+          
+            <p class="content-text">
+              <span data-en="Young people should execute boldly and learn through real-world feedback, even failure." data-zh="我坚信，年轻人应该勇于表达观点、勇于执行，在市场与现实中汲取反馈与失败。">Young people should execute boldly and learn through real-world feedback, even failure.</span>
+            </p>
+          
+            <p class="content-text">
+                <span data-en="This journey of self-exploration and steady growth has taught me to cherish every possible opportunity." data-zh="这是探索自我、实现稳定成长的必经之路，也让我更加珍视每一个可能的机会。">This journey of self-exploration and steady growth has taught me to cherish every possible opportunity.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="My goal is to be someone who truly loves the world and creates value for it — not a drifting opportunist." data-zh="我的目标，是成为一个真正热爱世界、为世界创造价值的人，而非随波逐流的机会主义者。">My goal is to be someone who truly loves the world and creates value for it — not a drifting opportunist.</span>
+              </p>
+          
+            <blockquote style="margin: 40px auto; padding: 20px; background: rgba(255,255,255,0.05); border-left: 4px solid var(--highlight-color-1); font-style: italic;">
+              <span data-en="“In the world's broad field of battle, in the bivouac of life,&#10;              Be not like dumb, driven cattle — Be a hero in the strife.”" data-zh="“在世界辽阔的疆场上，在生命露宿的营地上，&#10;              别作默默无声、任人驱使的羔羊；&#10;              要在战斗中，当一名英勇无畏的闯将。”">“In the world's broad field of battle, in the bivouac of life,  
+              Be not like dumb, driven cattle — Be a hero in the strife.”</span><br>
+              <span style="display: block; text-align: right; margin-top: 10px; opacity: 0.5;"><span data-en="—— Longfellow, A Psalm of Life" data-zh="—— 朗费罗 Longfellow, A Psalm of Life">—— Longfellow, <em>A Psalm of Life</em></span></span>
+            </blockquote>
+
+            <p class="content-text">
+                <span data-en="Believe me, the setbacks and struggles I’ve endured may go far beyond what most would imagine." data-zh="相信我，我经历过的波折和挫折，远远超过大多数人的想象。">Believe me, the setbacks and struggles I’ve endured may go far beyond what most would imagine.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="At 21, I was already responsible for supporting several team members. While others were enjoying campus life, I was living in a leaky basement and a ¥600/month rental." data-zh="21岁那年，我就要负责养活几名员工。最困难的时候，别人还在大学校园里谈恋爱、喝咖啡、晒图书馆，而连女孩手都没牵过的我住在潮湿漏水的地下室、月租600块的出租屋，为公司的房租发愁。">At 21, I was already responsible for supporting several team members. While others were enjoying campus life, I was living in a leaky basement and a ¥600/month rental.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="During the day, I wore a suit and sold hard — meeting clients, chasing hope. Back then, I had no university offers, no fallback. I believe this became one of the key forces that drove me to finish my Sydney degree in just 1.5 years." data-zh="白天穿上西装，还得硬着头皮做销售、跑客户。那时的我，没有任何大学 offer，也没有退路。我一直认为，这是我用1.5年读完悉尼大学最主要的动力之一。">During the day, I wore a suit and sold hard — meeting clients, chasing hope. Back then, I had no university offers, no fallback. I believe this became one of the key forces that drove me to finish my Sydney degree in just 1.5 years.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="And yet, my dreams remained bold — clear, ambitious, and seemingly unreachable." data-zh="但我为自己设立的理想与目标，依旧宏大，依旧清晰，依旧让人觉得遥不可及。">And yet, my dreams remained bold — clear, ambitious, and seemingly unreachable.</span>
+              </p>
+              
+              <p class="content-text">
+                <span data-en="My happiest moment? At 23, in my dorm at Cambridge, I developed an MVP with a friend from Tencent — a digital outlet fusing AI supermodels and off-season fashion." data-zh="我人生最快乐的时刻，是 23 岁，在剑桥大学宿舍里，和腾讯的朋友独立开发了一个 MVP —— 一个结合 AI 数字超模与过季时尚的线上奥特莱斯平台。">My happiest moment? At 23, in my dorm at Cambridge, I developed an MVP with a friend from Tencent — a digital outlet fusing AI supermodels and off-season fashion.</span>
+              </p>
+          
+            <p class="content-text">
+              <span data-en="Business is romantic when small teams shake industries — and, sometimes, change the world." data-zh="我相信，商业的浪漫，&#10;              不在于巨头筑城，而是小团队在细分赛道上撬动千亿市场，甚至在关键时刻，改变世界。">Business is romantic when small teams shake industries — and, sometimes, change the world.</span>
+            </p>
+          
+            <p class="content-text" style="text-align:right; margin-top: 40px; font-style: italic; color: var(--highlight-color-2);">
+              <span data-en="—— Richard Lin" data-zh="—— 林仕祺 Richard Lin">—— Richard Lin</span>
+            </p>
+          </div>
+
+
+    </div>
+
+    <script>
+        // Simple scroll reveal animation
+        const scrollElements = document.querySelectorAll('.scroll-reveal');
+
+        const elementInView = (el, dividend = 1) => {
+            const elementTop = el.getBoundingClientRect().top;
+            return (
+                elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
+            );
+        };
+
+        const displayScrollElement = (element) => {
+            element.classList.add('visible');
+        };
+
+        const hideScrollElement = (element) => {
+            element.classList.remove('visible');
+        }
+
+        const handleScrollAnimation = () => {
+            scrollElements.forEach((el) => {
+                if (elementInView(el, 1.25)) {
+                    displayScrollElement(el);
+                } else {
+                    // Optional: hide element again when scrolled out of view
+                    // hideScrollElement(el);
+                }
+            })
+        }
+
+        window.addEventListener('scroll', () => {
+            handleScrollAnimation();
+        });
+        // Initial check for scroll animation
+        handleScrollAnimation();
+
+        // Music toggle
+        const music = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+            } else {
+                music.volume = 0.6;
+                music.play();
+            }
+            isPlaying = !isPlaying;
+        }
+
+        // Language toggle
+        function toggleLanguage() {
+            const html = document.documentElement;
+            const currentLang = html.getAttribute('lang');
+            const newLang = currentLang === 'en' ? 'zh' : 'en';
+            html.setAttribute('lang', newLang);
+            updateContent(newLang);
+        }
+
+        function updateContent(lang) {
+            // Update text content for elements with data-en/data-zh attributes
+            document.querySelectorAll('[data-en], [data-zh]').forEach(element => {
+                if (lang === 'en' && element.dataset.en) {
+                    element.textContent = element.dataset.en;
+                } else if (lang === 'zh' && element.dataset.zh) {
+                    element.textContent = element.dataset.zh;
+                }
+            });
+            // Update title specifically, as it's outside the body's text flow
+            const titleElement = document.querySelector('title');
+            if (lang === 'en' && titleElement.dataset.en) {
+                titleElement.textContent = titleElement.dataset.en;
+            } else if (lang === 'zh' && titleElement.dataset.zh) {
+                titleElement.textContent = titleElement.dataset.zh;
+            }
+        }
+
+        // Set default language to English on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            document.documentElement.setAttribute('lang', 'en');
+            updateContent('en');
+        });
+    </script>
+
+</body>
+</html>
